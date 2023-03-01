@@ -344,7 +344,7 @@ Table: flag
 +---------------------------+
 | flag                      |
 +---------------------------+
-| flag{Sm4rt!_k33P_d1gGIng} |
+| flag{**FLAG1**} |
 +---------------------------+
 ...
 ```
@@ -677,7 +677,7 @@ www-data@olympus:/$ cd home/zeus/
 www-data@olympus:/home/zeus$ ls
 snap  user.flag  zeus.txt
 www-data@olympus:/home/zeus$ cat user.flag 
-flag{Y0u_G0t_TH3_l1ghtN1nG_P0w3R}
+flag{**Flag2**}
 www-data@olympus:/home/zeus$ 
 ```
 
@@ -1042,7 +1042,7 @@ $ cat root.flag
 
 
 
-                   flag{D4mN!_Y0u_G0T_m3_:)_}
+                   flag{**FLAG3**}
 
 
 
@@ -1063,7 +1063,7 @@ $ grep -rni "flag{" /etc/
 $ cat /etc/ssl/private/.b0nus.fl4g
 Here is the final flag ! Congrats !
 
-flag{Y0u_G0t_m3_g00d!}
+flag{**FLAG4**}
 
 
 As a reminder, here is a usefull regex :
