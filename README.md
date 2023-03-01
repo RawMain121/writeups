@@ -1,2 +1,2 @@
 # writeups
-Writeups of CTF (HackTheBox &amp; TryHackMe)
+Writeups of CTF (HackTheBox - TryHackMe)
