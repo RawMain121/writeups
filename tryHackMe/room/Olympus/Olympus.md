@@ -1050,9 +1050,6 @@ Hope you liked the room ;)
 # FIX 
 ## SQL Injection sur search.php
 ```php
-<!-- @author 'Victor Alagwu';
-//   @project 'Simple Content Management System';
-//   @date    '0ctober 2016'; -->
 <?php include 'includes/header.php';?>
         <!-- Navigation Bar -->
    <?php include 'includes/navbar.php';?>
@@ -1132,9 +1129,7 @@ if (isset($_POST['submit'])) {
     </div>
   <script src="js/jquery.js"></script>
   <script src="js/bootstrap.min.js"></script>
-
-</body>
-</html>
+  ?>
 ```
 Pour vous protéger contre les **injections SQL** dans ce script, vous devez utiliser des **prepared statements** avec des requêtes paramétrées au lieu de concaténer directement l'entrée de l'utilisateur dans la requête SQL.
 
@@ -1194,13 +1189,12 @@ Il s'agit d'une correction possible du fichier **search.php** avec des **prepare
                     }
                 }
             }
-            ?>
+	?>
 ```
 
 ## File Upload 
 Original upload.php
-```php
-  GNU nano 4.8                                                                                         upload.php                                                                                                    
+```php                                    
 <?php
 $target_dir = "uploads/";
 $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
