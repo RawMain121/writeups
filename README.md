@@ -6,4 +6,4 @@ Si vous êtes intéressé par la cybersécurité et que vous cherchez à apprend
 
 ## TryHackMe
   - [Olympus](https://github.com/RawMain121/writeups/blob/main/tryHackMe/room/Olympus/Olympus.md)
-  - [Wonderland](https://github.com/RawMain121/writeups/edit/main/tryHackMe/room/Wonderland/Wonderland.md)
+  - [Wonderland](https://github.com/RawMain121/writeups/blob/main/tryHackMe/room/Wonderland/Wonderland.md)
