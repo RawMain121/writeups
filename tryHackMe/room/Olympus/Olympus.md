@@ -1,7 +1,4 @@
 # Olympus
-*Lien:* https://tryhackme.com/room/olympusroom
-
-
 
 ## Recon
 ### NMAP
