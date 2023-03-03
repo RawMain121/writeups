@@ -1,7 +1,5 @@
 # Wonderland
 
-lien : https://tryhackme.com/room/wonderland
-
 ## NMAP
 ```bash
 $ nmap -sC -sV -oA nmap/initialScan 10.10.209.89
