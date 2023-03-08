@@ -332,6 +332,7 @@ Progress: 4614 / 4615 (99.98%)
         Papers: No Results 
         ```
         
+# EXPLOITATION
 
 ```bash
 $ cat /usr/share/exploitdb/exploits/php/webapps/47204.txt   
