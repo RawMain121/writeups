@@ -154,7 +154,7 @@ On a donc deux solutions :
     ```
     
 - [dcode.fr](https://www.dcode.fr/chiffre-cesar)
-    ![dcode_fr_chiffre-cesar.png](../../_resources/dcode_fr_chiffre-cesar.png)
+    ![dcode_fr_chiffre-cesar.png](https://github.com/RawMain121/writeups/blob/main/tryHackMe/room/Boiler/_resources/dcode_fr_chiffre-cesar.png)
     
 
 Le texte était donc chiffré avec un décalage de 10.
@@ -243,7 +243,7 @@ Progress: 4614 / 4615 (99.98%)
 ```
 
 - http://boiler.thm/joomla/
-    ![HTTP_joomla.png](../../_resources/HTTP_joomla.png)
+    ![HTTP_joomla.png](https://github.com/RawMain121/writeups/blob/main/tryHackMe/room/Boiler/_resources/HTTP_joomla.png)
     Wappalyser nous indique que Le CMS du site est **Joomla**, on va donc se renseigner sur ce CMS:
     - Identification du CMS a l'aide de l'outil **CMSEEK**:
         
@@ -316,7 +316,7 @@ Progress: 4614 / 4615 (99.98%)
     Fausse piste...
     
 - http://boiler.thm/joomla/_test/
-    ![HTTP_boiler-joomla_test.png](../../_resources/HTTP_boiler-joomla_test.png)
+    ![HTTP_boiler-joomla_test.png](https://github.com/RawMain121/writeups/blob/main/tryHackMe/room/Boiler/_resources/HTTP_boiler-joomla_test.png)
     
     - sar2html
         
@@ -617,7 +617,7 @@ Nous allons utiliser /usr/bin/find puisque aprés une recherche sur [](https://
 
 il existe une méhode pour monté en privilège avec /usr/bin/find (source: [gtfobins](https://gtfobins.github.io/gtfobins/find/#suid "gtfobins/find/#suid"))
 
-![find_SUID.png](../../_resources/find_SUID.png)
+![find_SUID.png](https://github.com/RawMain121/writeups/blob/main/tryHackMe/room/Boiler/_resources/find_SUID.png)
 
 On va utiliser cette méthode :
 
