@@ -153,8 +153,9 @@ On a donc deux solutions :
     Shift 10: Just wanted to see if you find it. Lol. Remember: Enumeration is the key!
     ```
     
-- [dcode.fr](https://www.dcode.fr/chiffre-cesar)
-    ![dcode_fr_chiffre-cesar.png](https://github.com/RawMain121/writeups/blob/main/tryHackMe/room/Boiler/_resources/dcode_fr_chiffre-cesar.png)
+- Utiliser [dcode.fr](https://www.dcode.fr/chiffre-cesar)
+	
+	![dcode_fr_chiffre-cesar.png](https://github.com/RawMain121/writeups/blob/main/tryHackMe/room/Boiler/_resources/dcode_fr_chiffre-cesar.png)
     
 
 Le texte était donc chiffré avec un décalage de 10.
@@ -284,11 +285,11 @@ Progress: 4614 / 4615 (99.98%)
          CMSeeK says ~ adieu
         
         ```
-        Aucune de vulnérabilité trouvé pour le moment.
+        Aucune vulnérabilité trouvée pour le moment.
         
 
 
-	Continuons  de rechercher des informations dans les pages trouvé par gobuster:
+	Continuons de rechercher des informations dans les pages trouvées par gobuster :
 
 - http://boiler.thm/joomla/_file
     
@@ -313,7 +314,7 @@ Progress: 4614 / 4615 (99.98%)
     
     ```
     
-    Fausse piste...
+    Fausse piste ...
     
 - http://boiler.thm/joomla/_test/
     ![HTTP_boiler-joomla_test.png](https://github.com/RawMain121/writeups/blob/main/tryHackMe/room/Boiler/_resources/HTTP_boiler-joomla_test.png)
@@ -355,7 +356,7 @@ Cette note écrite par *Furkan KAYAPINAR* permet d'exécuter du code à distance
 
 L'url en question est : `http://<ipaddr>/index.php?plot=;<command-here>`
 
-On pourrait le faire manuellement dans le navigateur internet, burp, curl, ... mais un exploit existe (écris par *Musyoka Ian*), il est même disponible dans **exploit-db** :
+On pourrait le faire manuellement dans le navigateur internet, burp, curl, ... mais un exploit existe déjà. Il est disponible dans **exploit-db** :
 
 ```python
 GNU nano 7.2                                                                          49344.py                                                                                    
@@ -445,7 +446,7 @@ Aug 20 12:24:38 parrot sshd[2443]: Received signal 15; terminating.
 
 On vient de trouver le mot de passe de connexion en ssh de l'utilisateur **'basterd'.**
 
-Essayons de nous connecter en ssh avec ce compte (lors du scan de nmap, nous avons vu que le port **55007** était ouvert et utilise le protocool **ssh**) :
+Essayons de nous connecter en ssh avec ce compte (lors du scan de nmap, nous avons vu que le port **55007** était ouvert et utilise le protocole **ssh**) :
 
 ```bash
 $ ssh basterd@boiler.thm -p 55007
@@ -531,15 +532,15 @@ fi
 
 Ce script Bash copie tous les fichiers contenant le mot "data" dans le répertoire local "/home/stoner" vers un répertoire de sauvegarde distant "/usr/local/backup" sur une machine distante identifiée par l'adresse IP "1.2.3.4". Le script crée un nouveau répertoire dans le répertoire de sauvegarde distant avec la date actuelle dans le format YY.MM.DD pour stocker les fichiers copiés.
 
-Ensuite, pour chaque fichier contenant le mot "data" dans le répertoire local, le script affiche un message de début de copie, copie le fichier vers le répertoire de sauvegarde distant et affiche un message de fin de copie. Ensuite, il vérifie si le fichier copié existe dans le répertoire de sauvegarde distant. Si c'est le cas, il supprime le fichier d'origine local et affiche un message de suppression de fichier, sinon il affiche un message indiquant que la copie n'est pas terminée et quitte le script.
+Ensuite, pour chaque fichier contenant le mot "data" dans le répertoire local, le script affiche un message de début de copie puis copie le fichier vers le répertoire de sauvegarde distant et affiche un message de fin de copie. Il vérifie si le fichier copié existe dans le répertoire de sauvegarde distant. Si c'est le cas il supprime le fichier d'origine local et affiche un message de suppression de fichier, sinon il affiche un message indiquant que la copie n'est pas terminée et quitte le script.
 
 Enfin, si le répertoire local "/home/stoner" n'existe pas, le script affiche un message indiquant que le répertoire n'est pas présent et quitte le script. Le script enregistre également les messages dans un fichier journal situé dans "/home/stoner/bck.log".
 
 Il y a plusieurs informations sensibles dans ce script **backup.sh**.
 
-Le nom d'utilisateur et le mot de passe de l'utilisateur sont stockés dans les variables "USER=stoner" et "<stoner_mot_de_passe>". Ces informations sont intéréssante car elle permettent d'accéder à la machine distante en utilisant les informations d'identification de l'utilisateur.
+Le nom d'utilisateur et le mot de passe de l'utilisateur sont stockés dans les variables "USER=stoner" et "<stoner_mot_de_passe>". Ces informations sont intéréssantes car elles permettent d'accéder à la machine distante en utilisant les informations d'identification de l'utilisateur.
 
-Connectons nous en ssh avec l'utilisateur stoner :
+Connectons-nous en ssh avec l'utilisateur stoner :
 
 ```bash
 $ ssh stoner@boiler.thm -p 55007
@@ -579,7 +580,7 @@ stoner@Vulnerable:~$ cat .secret
 
 Nous venons de trouver le secret. 
 
-Continuons notre énumération manuel 
+Continuons notre énumération manuelle 
 
 ```bash
 $ find / -perm -u=s 2>/dev/null
@@ -608,15 +609,15 @@ $ find / -perm -u=s 2>/dev/null
 /usr/bin/newuidmap
 ```
 
-Cette commande va chercher tous les fichiers sur le système de fichiers qui ont un bit "setuid" activé pour l'utilisateur propriétaire du fichier, ce qui signifie que lorsque le fichier est exécuté,il s'exécutera avec les privilèges de l'utilisateur propriétaire du fichier plutôt qu'avec les privilèges de l'utilisateur qui l'exécute.
+Cette commande va chercher tous les fichiers sur le système de fichiers qui ont un bit "setuid" activé pour l'utilisateur propriétaire du fichier, ce qui signifie que lorsque le fichier est exécuté, il s'exécutera avec les privilèges de l'utilisateur "root" du fichier plutôt qu'avec les privilèges de l'utilisateur "stoner".
 
-Plus précisément, la commande "**find**" est utilisée pour rechercher des fichiers à partir d'un emplacement spécifié ("/" dans ce cas, ce qui signifie que la recherche commence à partir de la racine du système de fichiers).
+Plus précisément, la commande "**find**" est utilisée pour rechercher des fichiers à partir d'un emplacement spécifié.
 
 L'option "-perm -u=s" spécifie que l'on cherche des fichiers dont le bit **setuid** est activé pour l'utilisateur propriétaire du fichier. L'option "2>/dev/null" redirige les messages d'erreur standard (stderr) vers le périphérique null, afin de ne pas afficher les erreurs liées aux permissions insuffisantes.
 
-Nous allons utiliser /usr/bin/find puisque aprés une recherche sur [](https://gtfobins.github.io/gtfobins/find/#suid "gtfobins find suid")
+Nous allons utiliser /usr/bin/find.
 
-il existe une méhode pour monté en privilège avec /usr/bin/find (source: [gtfobins](https://gtfobins.github.io/gtfobins/find/#suid "gtfobins/find/#suid"))
+Il existe une méthode pour monter en privilège avec /usr/bin/find (source: [gtfobins](https://gtfobins.github.io/gtfobins/find/#suid "gtfobins/find/#suid"))
 
 ![find_SUID.png](https://github.com/RawMain121/writeups/blob/main/tryHackMe/room/Boiler/_resources/find_SUID.png)
 
@@ -642,15 +643,15 @@ Bien joué, nous voilà **root** de la machine ! 
 
 - **backup.sh** et **log.txt**
 
-	Il est important de protéger ces informations sensibles en utilisant des mesures de sécurité appropriées, telles que la limitation des 		droits d'accès aux fichiers et aux répertoires. Ces informations sont sensibles car elles permettent à une personne mal intentionnée 	d'accéder à la machine distante en utilisant les informations d'identification de l'utilisateur.
+	Il est important de protéger ces informations sensibles en utilisant des mesures de sécurité appropriées telles que la limitation des droits d'accès aux fichiers et aux répertoires. Ces informations sont sensibles car elles permettent à une personne mal intentionnée d'accéder à la machine distante en utilisant les informations d'identification de l'utilisateur.
 
 - **SAR2HTML**
 
-	SAR2HTML est un outil open-source qui convertit les données du système collectées par SAR (System Activity Reporter) en un format HTML facilement lisible. SAR2HTML version 3.2.1 est une version ancienne de l'outil, qui pourrait potentiellement présenter des vulnérabilités de sécurité.
-
-	Si vous utilisez SAR2HTML 3.2.1, il est recommandé de mettre à jour vers la dernière version disponible pour résoudre les éventuelles vulnérabilités.
+	SAR2HTML version 3.2.1 est une version ancienne de l'outil, qui pourrait potentiellement présenter des vulnérabilités de sécurité.
+	Il est donc recommandé de mettre à jour vers la dernière version disponible pour résoudre les éventuelles vulnérabilités.
 
 - **SUID**
-	Vous pouvez limiter les privilèges de l'utilisateur ayant le droit d'exécuter /usr/bin/find en ne lui donnant pas les droits SUID pour cette commande. Si l'utilisateur a besoin d'exécuter cette commande avec des privilèges élevés, vous pouvez utiliser des mécanismes de contrôle d'accès basés sur des rôles ou des groupes pour limiter les utilisateurs qui peuvent exécuter cette commande avec des privilèges élevés.
+	
+	Vous pouvez limiter les privilèges de l'utilisateur ayant le droit d'exécuter /usr/bin/find en lui refusant les droits SUID pour cette commande. Si l'utilisateur a besoin d'exécuter cette commande avec des privilèges élevés, vous pouvez utiliser des mécanismes de contrôle d'accès basés sur des rôles ou des groupes pour limiter les utilisateurs qui peuvent exécuter cette commande avec des privilèges élevés.
 
 ---
