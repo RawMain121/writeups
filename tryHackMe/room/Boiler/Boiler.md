@@ -78,7 +78,7 @@
 
 ## PORT 21
 
-Connection au port 21 avec **ftp**:
+Connexion au port 21 avec **ftp**:
 
 ```bash
 $ ftp anonymous@boiler.thm
@@ -284,11 +284,11 @@ Progress: 4614 / 4615 (99.98%)
          CMSeeK says ~ adieu
         
         ```
-        Pas de vulnerabilité trouvé pour le moment.
+        Aucune de vulnérabilité trouvé pour le moment.
         
 
 
-	Continons de rechercher des informations dans les pages trouvé par gobuster:
+	Continuons  de rechercher des informations dans les pages trouvé par gobuster:
 
 - http://boiler.thm/joomla/_file
     
