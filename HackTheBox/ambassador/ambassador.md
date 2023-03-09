@@ -886,14 +886,14 @@ Nous voilà **administrateur** de la machine !
     
     ```bash
     $ cat user.txt 
-    9a7dd536d1abf1a78cd11c59b693a5f5
+    <USER_FLAG>
     ```
     
 - root.txt
     
     ```bash
     cat /root/root.txt
-    a70f0f2bd288e4f29a082a9ae01937e0
+    <ROOT_FLAG>
     ```
     
 
