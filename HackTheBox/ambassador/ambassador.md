@@ -1,4 +1,4 @@
-On commence, comme d'habitude, avec un scan de Nmap :
+On commence avec un scan de Nmap :
 
 ## NMAP
 
@@ -542,7 +542,7 @@ Bien, nous venons de trouver un nouvel identifiant.
 
 ## MYSQL
 
-Essayons de nous connecter a MySQL avec les identifiants trouvé au dessus :
+Essayons de nous connecter a MySQL avec les identifiants trouvés au dessus :
 
 ```bash
 $ mysql -u grafana -p -h 10.129.228.56
@@ -599,7 +599,7 @@ MySQL [whackywidget]> show tables;
 1 row in set (0.012 sec)
 ```
 
-On affiche toutes les colonnes de la tables **users** :
+On affiche toutes les colonnes de la table **users** :
 
 ```sql
 MySQL [whackywidget]> SELECT * FROM users;
@@ -711,7 +711,7 @@ total 24
 
 ```
 
-Regardons les commits qui ont été fait avec la commande **git log** :
+Regardons les commits qui ont été faits avec la commande **git log** :
 
 ```git
 developer@ambassador:/opt/my-app$ git log
@@ -768,7 +768,7 @@ index 35c08f6..fc51ec0 100755
 
 ```
 
-Nous venons de trouver un token utiliser pour **"Consul"**.
+Nous venons de trouver un token utilisé pour **"Consul"**.
 
 Consul est un outil open source développé par HashiCorp pour la gestion des services et la découverte de services. Il s'agit d'un système de configuration distribué et d'un système de découverte de services qui permet aux applications de s'enregistrer dynamiquement et de découvrir les services disponibles dans un environnement de cloud computing.
 
@@ -776,7 +776,7 @@ Consul est un outil open source développé par HashiCorp pour la gestion des se
 
 ### Recherche d'exploit :
 
-Après quelques recherche sur internet, on peut trouver un exploit déjà écrit sur Github :
+Après quelques recherches sur internet, on peut trouver un exploit déjà écrit sur Github :
 
 Lien : https://github.com/GatoGamer1155/Hashicorp-Consul-RCE-via-API
 
@@ -823,7 +823,7 @@ Voici le fichier README.md :
 
 Exploitation :
 
-- Lancement du server http avec le module **http.server** de **python** depuis notre machine:
+- Lancement du serveur http avec le module **http.server** de **python** depuis notre machine :
     
     ```bash
     $ python3 -m http.server 9090
