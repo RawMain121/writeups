@@ -8,6 +8,7 @@ Si vous êtes intéressé par la cybersécurité et que vous cherchez à apprend
   - [Olympus](https://github.com/RawMain121/writeups/blob/main/tryHackMe/room/Olympus/Olympus.md)
   - [Wonderland](https://github.com/RawMain121/writeups/blob/main/tryHackMe/room/Wonderland/Wonderland.md)
   - [Boiler](https://github.com/RawMain121/writeups/blob/main/tryHackMe/room/Boiler/Boiler.md)
+  - [Anonymous](https://github.com/RawMain121/writeups/blob/main/tryHackMe/room/Anonymous/README.md)
    
   <a href="https://tryhackme.com/p/RawMain"><img src="https://tryhackme-badges.s3.amazonaws.com/RawMain.png" alt="TryHackMe Badge"></a>
 
