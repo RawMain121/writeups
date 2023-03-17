@@ -12,7 +12,6 @@ Si vous êtes intéressé par la cybersécurité et que vous cherchez à apprend
    
   <a href="https://tryhackme.com/p/RawMain"><img src="https://tryhackme-badges.s3.amazonaws.com/RawMain.png" alt="TryHackMe Badge"></a>
 
-
 ## HackTheBox 
   - [Ambassador](https://github.com/RawMain121/writeups/blob/main/HackTheBox/ambassador/ambassador.md)
   
