@@ -356,8 +356,8 @@ Nous allons utiliser le script [linPEAS](https://github.com/carlospolop/PEASS-ng
 ![linpeas_interestingFiles_env.png](https://github.com/RawMain121/writeups/blob/main/tryHackMe/room/Anonymous/_resources/linpeas_interestingFiles_env.png)
 
 Nous avons découvert deux informations intéressantes surlignées en jaune (*99% PE vector*):
-\- /usr/bin/env
-\- lxd
+- /usr/bin/env
+- lxd
 
 Nous avons donc deux vecteurs possibles pour élever nos privilèges :
 
