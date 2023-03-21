@@ -1,4 +1,8 @@
-[Forgot CTF](https://app.hackthebox.com/machines/511)
+
+<a href="https://app.hackthebox.com/machines/511"><img src="https://github.com/RawMain121/writeups/blob/main/HackTheBox/Forgot/_resources/Forgot.png" alt="Forgot"></a>
+
+Link : https://app.hackthebox.com/machines/511
+
 
 # NMAP
 
