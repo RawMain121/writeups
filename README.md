@@ -14,5 +14,6 @@ Si vous êtes intéressé par la cybersécurité et que vous cherchez à apprend
 
 ## HackTheBox 
   - [Ambassador](https://github.com/RawMain121/writeups/blob/main/HackTheBox/ambassador/ambassador.md)
+  - [Forgot](https://github.com/RawMain121/writeups/blob/main/HackTheBox/Forgot/README.md)
   
   <a href="https://app.hackthebox.com/profile/38688"><img src="https://www.hackthebox.eu/badge/image/38688" alt="HackTheBox Badge"></a>
